@@ -4,8 +4,8 @@
 -- 		conuntry is enumeration of contries US, CO and TN with a default of US
 -- 		if the table already exists, the script not create it again
 CREATE TABLE IF NOT EXISTS users (
-	id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	email VARCHAR(255) NOT NULL,
-	name VARCHAR(255) NOT NULL,
-	country ENUM('US', 'CO', 'TN') DEFAULT 'US',
+	id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	email VARCHAR(255) NOT NULL UNIQUE,
+	name VARCHAR(255),
+	country ENUM('US', 'CO', 'TN') DEFAULT 'US'
 );
