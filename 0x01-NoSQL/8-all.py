@@ -2,10 +2,9 @@
 """
 8-all module
 """
-from pymongo.collection import Collection
 
 
-def list_all(mongo_collection: Collection) -> list:
+def list_all(mongo_collection):
     """
     lists all documents in a collection
     returns an empty list if no document in the collection
