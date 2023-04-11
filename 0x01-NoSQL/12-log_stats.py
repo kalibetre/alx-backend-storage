@@ -16,7 +16,7 @@ if __name__ == "__main__":
             }})
         print("\tmethod {}: {}".format(method, meth_count))
 
-    status_checks = meth_count = logs_collection.count_documents(
+    status_checks = logs_collection.count_documents(
         {"$and": [{
             "method": {
                 "$eq": 'GET'
