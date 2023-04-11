@@ -1,0 +1,2 @@
+// A mongodb command to find a document in the collection school
+db.school.find({ name: "Holberton school" })
