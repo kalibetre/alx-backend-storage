@@ -1,9 +1,26 @@
 #!/usr/bin/env python3
 """ exercise module """
 import uuid
+from functools import wraps
 from typing import Callable, Optional, Union
 
 import redis
+
+
+def count_calls(method: Callable) -> Callable:
+    """
+    decorates a method to count how many times it was called
+    """
+
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        """
+        wrapper function
+        """
+        self._redis.incr(method.__qualname__)
+        return method(self, *args, **kwargs)
+
+    return wrapper
 
 
 class Cache:
@@ -18,6 +35,7 @@ class Cache:
         self._redis = redis.Redis(host='localhost', port=6379, db=0)
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         saves a data to the redis store using a uuid key and returns the
