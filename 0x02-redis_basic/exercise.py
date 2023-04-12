@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ exercise module """
 import uuid
-from typing import Callable, Union
+from typing import Callable, Optional, Union
 
 import redis
 
@@ -30,7 +30,7 @@ class Cache:
     def get(
         self,
         key: str,
-        fn: Callable,
+        fn: Optional[Callable] = None,
     ) -> Union[str, bytes, int, float, None]:
         """
         returns the value stored in the redis store at the key by converting it
