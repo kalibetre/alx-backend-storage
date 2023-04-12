@@ -36,11 +36,11 @@ def replay(method: Callable) -> None:
     inputs = redis_db.lrange(meth_name + ":inputs", 0, -1)
     outputs = redis_db.lrange(meth_name + ":outputs", 0, -1)
 
-    print(f"{meth_name} was called {len(inputs)} times:")
+    print("{} was called {} times:".format(meth_name, len(inputs)))
     for i in range(len(inputs)):
         input = inputs[i].decode("utf-8")
         output = outputs[i].decode("utf-8")
-        print(f"{meth_name}(*{input}) -> {output}")
+        print("{}(*{}) -> {}".format(meth_name, input, output))
 
 
 def count_calls(method: Callable) -> Callable:
