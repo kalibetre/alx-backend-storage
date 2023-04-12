@@ -8,6 +8,8 @@ import redis
 import requests
 from requests import Response
 
+_redis = redis.Redis(host='localhost', port=6379, db=0)
+
 
 def counter(method: Callable) -> Callable:
     """
@@ -20,11 +22,14 @@ def counter(method: Callable) -> Callable:
         """
         wrapper function
         """
-        _redis = redis.Redis(host='localhost', port=6379, db=0)
-        key = f"count:{args[0]}"
-        _redis.incr(key)
-        _redis.expire(key, 10)
-        return method(*args, **kwargs)
+        _redis.incr(f"count:{args[0]}")
+
+        html = _redis.get("html-cache:{args[0]}")
+        if html is not None:
+            return html.decode("utf-8")
+        html = method(*args, **kwargs)
+        _redis.setex(f"html-cache:{args[0]}", 10, html)
+        return html
 
     return wrapper
 
