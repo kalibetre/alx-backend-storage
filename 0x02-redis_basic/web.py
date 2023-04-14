@@ -8,7 +8,8 @@ import redis
 import requests
 from requests import Response
 
-_redis = redis.Redis(host='localhost', port=6379, db=0)
+_redis = redis.Redis()
+_redis.flushdb()
 
 
 def counter(method: Callable) -> Callable:
