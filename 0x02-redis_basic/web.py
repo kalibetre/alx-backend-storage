@@ -24,7 +24,7 @@ def counter(method: Callable) -> Callable:
         """
         _redis.incr(f"count:{args[0]}")
 
-        html = _redis.get("html-cache:{args[0]}")
+        html = _redis.get(f"html-cache:{args[0]}")
         if html is not None:
             return html.decode("utf-8")
         html = method(*args, **kwargs)
