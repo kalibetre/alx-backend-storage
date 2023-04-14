@@ -18,17 +18,17 @@ def counter(method: Callable) -> Callable:
     """
 
     @wraps(method)
-    def wrapper(*args, **kwargs):
+    def wrapper(url):
         """
         wrapper function
         """
-        _redis.incr(f"count:{args[0]}")
+        _redis.incr(f"count:{url}")
 
-        html = _redis.get(f"cached:{args[0]}")
+        html = _redis.get(f"cached:{url}")
         if html is not None:
             return html.decode("utf-8")
-        html = method(*args, **kwargs)
-        _redis.setex(f"cached:{args[0]}", 10, html)
+        html = method(url)
+        _redis.setex(f"cached:{url}", 10, html)
         return html
 
     return wrapper
